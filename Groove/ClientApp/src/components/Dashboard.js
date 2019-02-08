@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { NavBar } from './NavBar';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import {DashBoardLayout} from './DashBoardLayout';
-import {Counter} from './Counter';
+import {ItemTile} from './ItemTile';
 import {FetchData} from './FetchData';
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 export class Dashboard extends Component {
   displayName = Dashboard.name
 
   render() {
     return (
-      <Grid fluid>
-      <Row>
-        <Col sm={3}>
-        <NavBar/>
-        </Col>
-        <Col sm={9}>
-          <DashBoardLayout>
-            <Route exact path='/dashboard/counter' component={Counter} />
-            <Route path='/dashboard/fetchData' component={FetchData}/>
-          </DashBoardLayout>
-        </Col>
-      </Row>
-    </Grid>
+      <Grid container spacing={24}>
+      <Grid item xs={12}>
+          <AppBar color="primary" position="static">
+            <Toolbar>
+              <Typography variant="h6" color="inherit">
+                Groove
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        </Grid>
+          <Grid item xs={3}>
+            <NavBar/>
+          </Grid>
+          <Grid item xs={9}>
+            <DashBoardLayout>
+                      <Route exact path='/dashboard/' component={ItemTile} />
+                      <Route path='/dashboard/fetchData' component={FetchData}/>
+            </DashBoardLayout>
+            </Grid>
+      </Grid>
     );
   }
 }

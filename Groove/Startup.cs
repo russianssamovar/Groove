@@ -1,3 +1,5 @@
+using DBRepository.Factories;
+using DBRepository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,7 @@ namespace Groove
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddScoped<IRepositoryContextFactory, RepositoryContextFactory>(); 
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
         }
 

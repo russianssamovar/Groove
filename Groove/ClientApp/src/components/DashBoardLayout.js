@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
 
 export class DashBoardLayout extends Component {
   displayName = DashBoardLayout.name
