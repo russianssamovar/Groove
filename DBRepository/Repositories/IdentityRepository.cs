@@ -11,19 +11,11 @@ namespace DBRepository.Repositories
 		public IdentityRepository(string connectionString, IRepositoryContextFactory contextFactory)
 		    : base(connectionString, contextFactory) { }
 
-	    public User GetUser(string userName, string password)
+	    public User GetUser(string userName)
 	    {
 	        using (var context = ContextFactory.CreateDbContext(ConnectionString))
 	        {
-	            return context.Users.FirstOrDefault(u => u.Login == userName && u.Password == password);
-	        }
-        }
-
-	    public async Task<User> GetUser(string userName)
-	    {
-	        using (var context = ContextFactory.CreateDbContext(ConnectionString))
-	        {
-	            return await context.Users.FirstOrDefaultAsync(u => u.Login == userName);
+	            return context.Users.FirstOrDefault(u => u.Login == userName);
 	        }
         }
 

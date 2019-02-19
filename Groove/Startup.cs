@@ -42,12 +42,13 @@ namespace Groove
                                                                           };
                                   });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-            services.AddScoped<IRepositoryContextFactory, RepositoryContextFactory>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<IRepositoryContextFactory, RepositoryContextFactory>();
             services.AddScoped<IIdentityRepository>(provider => new IdentityRepository(Configuration.GetConnectionString("DefaultConnection"), provider.GetService<IRepositoryContextFactory>()));
             services.AddScoped<IRepositoryContextFactory, RepositoryContextFactory>();
             services.AddScoped<IIdentityService, IdentityService>();
+
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
         }
 

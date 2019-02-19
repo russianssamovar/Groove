@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export class LoginForm extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ export class LoginForm extends Component {
       password: event.target.password.value
     }).then(function(response) 
     {
-      sessionStorage.setItem('token', response.data.access_token);
+      Cookies.set('token', response.data.access_token);
     })
   }
 

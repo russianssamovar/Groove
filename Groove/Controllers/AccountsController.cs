@@ -19,17 +19,17 @@ namespace Groove.Controllers
         }
 
         [Authorize]
-        [HttpGet("list")]
-        public async Task<IEnumerable<Account>> GetAccounts()
+        [HttpGet("get")]
+        public IEnumerable<Account> GetAccounts()
         {
-            var user = await _identityService.GetUser(User.Identity.Name);
-            return user.Accounts;
+            return _identityService.GetUser(User.Identity.Name).Accounts;
         }
 
+        [Authorize]
         [HttpGet("add")]
-        public async Task<IEnumerable<Account>> AddAccount(string code)
+        public IEnumerable<Account> AddAccount(string code)
         {
-            var user = await _identityService.GetUser(User.Identity.Name);
+            var user = _identityService.GetUser(User.Identity.Name);
             return user.Accounts;
         }
     }
