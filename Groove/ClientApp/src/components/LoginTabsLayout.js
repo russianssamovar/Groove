@@ -21,6 +21,9 @@ TabContainer.propTypes = {
 };
 
 export class LoginTabsLayout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     value: 0,
   };
@@ -42,7 +45,7 @@ export class LoginTabsLayout extends React.Component {
           </Tabs>
           </AppBar>
         <Grid container spacing={24}>
-          {value === 0 && <Grid item xs={12}><TabContainer><LoginForm /></TabContainer></Grid>}
+          {value === 0 && <Grid item xs={12}><TabContainer><LoginForm/></TabContainer></Grid>}
           {value === 1 && <Grid item xs={12}><TabContainer><RegistrationForm /></TabContainer></Grid>}
         </Grid>
         </div>

@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import { LinkContainer } from 'react-router-bootstrap';
 import TextField from 'material-ui/TextField';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
 
 export class LoginForm extends Component {
-constructor(props){
-  super(props);
-  this.state={
-  username:'',
-  password:''
+  constructor(props) {
+    super(props);
+    this.state = { isSuccess: false, loading: true };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
- }
+  handleSubmit(event) {
+    event.preventDefault();
+    axios.post('/api/identity/token', {
+      login: event.target.login.value,
+      password: event.target.password.value
+    }).then(function(response) 
+    {
+      sessionStorage.setItem('token', response.data.access_token);
+    })
+  }
+
 render() {
     return (
       <div>
         <MuiThemeProvider>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <div>
            <TextField
-             hintText="Enter your Username"
-             floatingLabelText="Username"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
+             id="login"
+             name="login"
+             hintText="Enter your email"
+             floatingLabelText="email"
+             onChange = {(event, newValue) => this.setState({email:newValue})}
              fullWidth={true}
              required
              />
            <br/>
              <TextField
+               id="password"
+               name="password"
                type="password"
                hintText="Enter your Password"
                floatingLabelText="Password"
@@ -42,9 +55,7 @@ render() {
                 spacing={2}
                 margin="15"
                 >
-             <LinkContainer to={'/dashboard'}>
-                  <RaisedButton label="Submit" primary={true} onClick={(event) => this.handleClick(event)}/>
-            </LinkContainer>
+                  <RaisedButton type="submit" label="Submit" primary={true}/>
             </Grid>
          </div>
          </form>

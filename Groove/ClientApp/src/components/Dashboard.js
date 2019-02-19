@@ -13,6 +13,11 @@ import Grid from '@material-ui/core/Grid';
 export class Dashboard extends Component {
   displayName = Dashboard.name
 
+  constructor(props) {
+    super(props);
+    this.state = { forecasts: [], loading: true };
+  }
+
   render() {
     return (
       <Grid container spacing={24}>
@@ -31,7 +36,6 @@ export class Dashboard extends Component {
           <Grid item xs={9}>
             <DashBoardLayout>
                       <Route exact path='/dashboard/' component={ItemTile} />
-                      <Route path='/dashboard/fetchData' component={FetchData}/>
             </DashBoardLayout>
             </Grid>
       </Grid>

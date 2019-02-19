@@ -1,6 +1,11 @@
 using System;
+using System.IO;
+using DBRepository;
+using DBRepository.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Groove
 {
@@ -8,11 +13,28 @@ namespace Groove
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+        
+            var host = BuildWebHost(args);
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            var config = builder.Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var factory = services.GetRequiredService<IRepositoryContextFactory>();
+                using (var context = factory.CreateDbContext(config.GetConnectionString("DefaultConnection")))
+                {
+                    DbInitializer.Initialize(context);
+                }
+            }
+            host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .Build();
     }
 }

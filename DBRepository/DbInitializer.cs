@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using CommonModels;
 
@@ -6,21 +7,18 @@ namespace DBRepository
 {
 	public static class DbInitializer
 	{
-		public static async Task Initialize(RepositoryContext context)
+		public static void Initialize(RepositoryContext context)
 		{
-			await context.Database.MigrateAsync();
+            context.Database.Migrate();
 
-			var userCount = await context.Users.CountAsync().ConfigureAwait(false);
-			if (userCount == 0)
-			{
-				context.Users.Add(new User()
-				{
-					Login = "admin",
-					Password = "745414",
-				});
-
-				await context.SaveChangesAsync().ConfigureAwait(false);
-			}
+		    var userCount = context.Users.Count();
+		    if (userCount != 0) return;
+		    context.Users.Add(new User()
+		    {
+		        Login = "admin",
+		        Password = "745414",
+		    });
+		    context.SaveChanges();
 		}
 	}
 }
