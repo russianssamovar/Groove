@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using DBRepository.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using CommonModels;
 
 namespace DBRepository.Repositories
@@ -32,5 +30,13 @@ namespace DBRepository.Repositories
                 return true;
 	        }
 	    }
-    }
+
+	    public User GetUserById(long userId)
+	    {
+	        using (var context = ContextFactory.CreateDbContext(ConnectionString))
+	        {
+	            return context.Users.FirstOrDefault(u => u.Id == userId);
+	        }
+        }
+	}
 }

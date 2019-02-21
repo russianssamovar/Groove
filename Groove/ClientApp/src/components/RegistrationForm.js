@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import { LinkContainer } from 'react-router-bootstrap';
 import TextField from 'material-ui/TextField';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
@@ -27,10 +26,10 @@ export class RegistrationForm extends Component {
       if(response.data.access_token != "")
       {
         Cookies.set('token', response.data.access_token);
+        window.location.replace("/dashboard");
       }
       else
       {
-        alert(response.data.message);
         this.setState(
           {
             isHidden: false, 

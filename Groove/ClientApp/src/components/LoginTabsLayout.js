@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import RegistrationForm from './RegistrationForm'
 import LoginForm from './LoginForm'
 import Grid from '@material-ui/core/Grid';
+import Cookies from 'js-cookie';
 
 function TabContainer(props) {
   return (
@@ -33,6 +34,12 @@ export class LoginTabsLayout extends React.Component {
   };
 
   render() {
+    var token = Cookies.get('token');
+    if(token != null)
+    {
+     window.location.replace("/dashboard");
+    }
+
     const { value } = this.state;
 
     return (

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CommonModels;
+﻿using CommonModels;
 
 namespace DBRepository.Interfaces
 {
@@ -7,5 +6,6 @@ namespace DBRepository.Interfaces
     {
         User GetUser(string userName);
         bool Registration(string userName, string password);
+        User GetUserById(long userId);
     }
 }

@@ -82,18 +82,20 @@ namespace Groove.Domain.Services
 
             var claims = new List<Claim>
                          {
-                             new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                             new Claim(ClaimsIdentity.DefaultNameClaimType, user.Id.ToString()),
                          };
 
-            ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-            return claimsIdentity;
+            return new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType); 
         }
 
         public User GetUser(string userName)
         {
             return _identityRepository.GetUser(userName);
+        }
+
+        public User GetUserById(long userId)
+        {
+            return _identityRepository.GetUserById(userId);
         }
     }
 }

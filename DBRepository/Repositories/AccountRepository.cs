@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CommonModels;
 using DBRepository.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace DBRepository.Repositories
 {
@@ -12,11 +13,20 @@ namespace DBRepository.Repositories
         {
         }
 
-        public async Task<Account> GetAccounts(long accountId)
+        public IEnumerable<Account> GetAccounts(long userId)
         {
             using (var context = ContextFactory.CreateDbContext(ConnectionString))
             {
-                return await context.Accounts.FirstOrDefaultAsync(ac => ac.Id == accountId);
+                return context.Accounts.Where(u => u.Owner.Id == userId);
+            }
+        }
+
+        public async Task<bool> Add(Account account)
+        {
+            using (var context = ContextFactory.CreateDbContext(ConnectionString))
+            {
+                await context.AddAsync(account);
+                return true;
             }
         }
     }

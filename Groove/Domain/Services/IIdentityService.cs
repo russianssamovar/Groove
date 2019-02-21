@@ -8,5 +8,7 @@ namespace Groove.Domain.Services
         AuthToken Autorize(string username, string password);
         AuthToken Registration(ReistrationModel reg);
         User GetUser(string userName);
+        User GetUserById(long userId);
+
     }
 }

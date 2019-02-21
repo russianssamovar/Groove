@@ -24,6 +24,7 @@ export class LoginForm extends Component {
       if(response.data !== null)
       {
         Cookies.set('token', response.data.access_token);
+        window.location.replace("/dashboard");
       }
       else
       {

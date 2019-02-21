@@ -1,7 +1,7 @@
 ﻿using System;
 using CommonModels.Identity;
 
-namespace Groove.Domain.Services
+namespace Groove.Domain
 {
     public static class RegistrationModelChecker
     {

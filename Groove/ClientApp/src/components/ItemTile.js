@@ -13,7 +13,7 @@ export class ItemTile extends Component {
   }
   oauthHandle(event)
 {
-  var newWindow = window.open('https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=http://localhost:54096/api/accounts/add&scope=offline&response_type=code&v=5.92', 'name', 'height=350,width=700');
+  var newWindow = window.open("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + document.domain + "/api/accounts/add&scope=offline&response_type=code&v=5.92", 'name', 'height=350,width=700');
     if (window.focus) {
       newWindow.focus();
     }

@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CommonModels;
 
 namespace DBRepository.Interfaces
 {
     public interface IAccountRepository
     {
-        Task<Account> GetAccounts(long accountId);
+        IEnumerable<Account> GetAccounts(long userId);
+        Task<bool> Add(Account account);
     }
 }

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { NavBar } from './NavBar';
-import { Col, Row } from 'react-bootstrap';
 import {DashBoardLayout} from './DashBoardLayout';
 import {ItemTile} from './ItemTile';
-import {FetchData} from './FetchData';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Cookies from 'js-cookie';
 
 export class Dashboard extends Component {
   displayName = Dashboard.name
@@ -19,6 +18,13 @@ export class Dashboard extends Component {
   }
 
   render() {
+
+    var token = Cookies.get('token');
+    if(token == null)
+    {
+     window.location.replace("/dashboard");
+    }
+
     return (
       <Grid container spacing={24}>
       <Grid item xs={12}>
