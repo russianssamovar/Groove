@@ -1,6 +1,6 @@
 ﻿using System;
 using CommonModels.Identity;
-using Groove.Services;
+using Groove.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Groove.Controllers
@@ -20,5 +20,12 @@ namespace Groove.Controllers
         {
             return Json(_identityService.Autorize(auth.Login, auth.Password));
         }
+
+        [HttpPost("registration")]
+        public JsonResult Registration([FromBody]ReistrationModel reg)
+        {
+            return Json(_identityService.Registration(reg));
+        }
+
     }
 }

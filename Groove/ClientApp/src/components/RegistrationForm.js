@@ -4,31 +4,41 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { LinkContainer } from 'react-router-bootstrap';
 import TextField from 'material-ui/TextField';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import FormLabel from '@material-ui/core/FormLabel';
+import "./LoginForm.css";
 
 export class RegistrationForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { isSuccess: false, loading: true };
+    this.state = { isSuccess: false, isHidden: true, message: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData(event.target);
-    fetch('/api/identity/registration', {
-      method: 'POST',
-      body: data,
-    }).then(response => response.json())
-    .then(data => {
-      this.state.isSuccess = data;
-    }).then(res => {
-      if(this.state.isSuccess)
+    axios.post('/api/identity/registration', {
+      login: event.target.email.value,
+      confirmEmail: event.target.confirmEmail.value,
+      password: event.target.password.value,
+      confirmPassword: event.target.confirmPassword.value
+    }).then((response) =>
+    {
+      if(response.data.access_token != "")
       {
-        window.location.href = "/dashboard";
+        Cookies.set('token', response.data.access_token);
       }
       else
       {
-        alert("Email alredy used");
-      }});
+        alert(response.data.message);
+        this.setState(
+          {
+            isHidden: false, 
+            message: response.data.message
+          }
+        );
+      }
+    })
   }
 
 render() {
@@ -74,10 +84,11 @@ render() {
                required
                />
              <br/>
-             <LinkContainer to={'/dashboard'}>
-                  <RaisedButton label="Submit" primary={true} onClick={(event) => this.handleClick(event)}/>
-            </LinkContainer>
+             <RaisedButton type="submit" label="Submit" primary={true}/>
          </Grid>
+         <FormLabel className={this.state.isHidden ? 'hidden' : 'nonHidden'} error="true">
+                {this.state.message}
+            </FormLabel>
          </form>
          </MuiThemeProvider>
          

@@ -5,11 +5,13 @@ import TextField from 'material-ui/TextField';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import FormLabel from '@material-ui/core/FormLabel';
+import "./LoginForm.css";
 
 export class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { isSuccess: false, loading: true };
+    this.state = { isSuccess: false, isHidden: true };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleSubmit(event) {
@@ -17,9 +19,16 @@ export class LoginForm extends Component {
     axios.post('/api/identity/token', {
       login: event.target.login.value,
       password: event.target.password.value
-    }).then(function(response) 
+    }).then((response) =>
     {
-      Cookies.set('token', response.data.access_token);
+      if(response.data !== null)
+      {
+        Cookies.set('token', response.data.access_token);
+      }
+      else
+      {
+        this.setState({isHidden: false});
+      }
     })
   }
 
@@ -58,6 +67,7 @@ render() {
                 >
                   <RaisedButton type="submit" label="Submit" primary={true}/>
             </Grid>
+            <FormLabel className={this.state.isHidden ? 'hidden' : 'nonHidden'} error="true"> Error login or password</FormLabel>
          </div>
          </form>
          </MuiThemeProvider>

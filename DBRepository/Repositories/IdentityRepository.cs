@@ -19,7 +19,7 @@ namespace DBRepository.Repositories
 	        }
         }
 
-	    public bool Reistration(string userName, string password)
+	    public bool Registration(string userName, string password)
 	    {
 	        using (var context = ContextFactory.CreateDbContext(ConnectionString))
 	        {

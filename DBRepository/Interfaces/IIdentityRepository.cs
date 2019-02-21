@@ -6,6 +6,6 @@ namespace DBRepository.Interfaces
     public interface IIdentityRepository
     {
         User GetUser(string userName);
-        bool Reistration(string userName, string password);
+        bool Registration(string userName, string password);
     }
 }
