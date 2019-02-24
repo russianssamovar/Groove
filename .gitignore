@@ -55,3 +55,4 @@ DBRepository/obj/DBRepository.csproj.nuget.g.props
 DBRepository/bin/Debug/netcoreapp2.1/DBRepository.deps.json
 CommonModels/obj/project.assets.json
 CommonModels/obj/CommonModels.csproj.nuget.g.props
+.vs/config/applicationhost.config

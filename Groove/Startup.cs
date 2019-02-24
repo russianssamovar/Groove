@@ -27,6 +27,7 @@ namespace Groove
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddCookie(options => options.LoginPath = "/")
                     .AddJwtBearer(options =>
                                   {
                                       options.RequireHttpsMetadata = false;
@@ -45,9 +46,10 @@ namespace Groove
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IIdentityRepository>(provider => new IdentityRepository(Configuration.GetConnectionString("DefaultConnection"), provider.GetService<IRepositoryContextFactory>()));
+            services.AddScoped<IAccountRepository>(provider => new AccountRepository(Configuration.GetConnectionString("DefaultConnection"), provider.GetService<IRepositoryContextFactory>()));
             services.AddScoped<IRepositoryContextFactory, RepositoryContextFactory>();
             services.AddScoped<IIdentityService, IdentityService>();
-
+            services.AddScoped<IAccountsService, AccountsService>();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
         }
 

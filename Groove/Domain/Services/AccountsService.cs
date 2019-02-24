@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Security.Claims;
 using CommonModels;
 using DBRepository.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Groove.Domain.Services
 {
-    public class AccountsService
+    public class AccountsService : IAccountsService
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IIdentityService _identityService;

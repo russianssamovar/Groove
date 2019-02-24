@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CommonModels;
+using CommonModels.Identity;
 using Groove.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,26 +11,20 @@ namespace Groove.Controllers
     [Route("api/[controller]")]
     public class AccountsController : Controller
     {
-        private readonly IIdentityService _identityService;
+        private readonly IAccountsService _accountsService;
 
-        public AccountsController(IIdentityService identityService)
+        public AccountsController(IAccountsService accountsService)
         {
-            _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
+            _accountsService = accountsService ?? throw new ArgumentNullException(nameof(accountsService));
         }
 
         [Authorize]
-        [HttpGet("get")]
-        public IEnumerable<Account> GetAccounts()
+        [HttpPost("add")]
+        public bool AddAccount([FromBody]AccountAddToken token)
         {
-            return _identityService.GetUser(User.Identity.Name).Accounts;
+            _accountsService.AddAccount(token.Code);
+            return true;
         }
-
-        [Authorize]
-        [HttpGet("add")]
-        public IEnumerable<Account> AddAccount(string code)
-        {
-            var user = _identityService.GetUser(User.Identity.Name);
-            return user.Accounts;
-        }
+    
     }
 }

@@ -22,7 +22,7 @@ export class Dashboard extends Component {
     var token = Cookies.get('token');
     if(token == null)
     {
-     window.location.replace("/dashboard");
+     window.location.replace("/");
     }
 
     return (

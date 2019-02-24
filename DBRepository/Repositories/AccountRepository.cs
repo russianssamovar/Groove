@@ -26,6 +26,7 @@ namespace DBRepository.Repositories
             using (var context = ContextFactory.CreateDbContext(ConnectionString))
             {
                 await context.AddAsync(account);
+                await context.SaveChangesAsync();
                 return true;
             }
         }
