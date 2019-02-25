@@ -28,6 +28,7 @@ namespace DBRepository.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OwnerId = table.Column<long>(nullable: false),
                     Url = table.Column<string>(nullable: true),
                     AccessToken = table.Column<string>(nullable: true),
                     UserId = table.Column<long>(nullable: true)

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { NavBar } from './NavBar';
 import {DashBoardLayout} from './DashBoardLayout';
-import {ItemTile} from './ItemTile';
+import {ItemTiles} from './Tiles/ItemTiles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,6 @@ import Cookies from 'js-cookie';
 
 export class Dashboard extends Component {
   displayName = Dashboard.name
-
   constructor(props) {
     super(props);
     this.state = { forecasts: [], loading: true };
@@ -41,7 +40,7 @@ export class Dashboard extends Component {
           </Grid>
           <Grid item xs={9}>
             <DashBoardLayout>
-                      <Route exact path='/dashboard/' component={ItemTile} />
+                      <Route exact path='/dashboard/' component={ItemTiles} />
             </DashBoardLayout>
             </Grid>
       </Grid>

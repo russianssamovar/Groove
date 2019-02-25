@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommonModels;
 using DBRepository.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,11 @@ namespace Groove.Domain.Services
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
+        public IEnumerable<Account> ListAccounts()
+        {
+            return  _accountRepository.GetAccounts(Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name));
+        }
+
         public void AddAccount(string token)
         {
             var user = _identityService.GetUserById(Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name));
@@ -29,9 +35,8 @@ namespace Groove.Domain.Services
             _accountRepository.Add(new Account
             {
                 AccessToken = token,
-                Owner = user
+                OwnerId = user.Id
             });
-
         }
     }
 }

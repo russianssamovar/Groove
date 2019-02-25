@@ -19,15 +19,23 @@ export class AddPage extends Component {
     var config = {
         headers: {'Authorization': "bearer " + token}
     };
+    
+    var urlParams = new URLSearchParams(window.location.search);
     axios.post('/api/accounts/add', 
     {
-        code:"aaaaaaaaaaa"
+        code: urlParams.get('code')
     },
      config
       ).then((response) =>
       {
         window.close();
-      });
+      })
+      .catch(error => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          Cookies.remove('token');
+          window.location.replace("/");
+        }
+    });
 
     return (
       <div>in progress...</div>

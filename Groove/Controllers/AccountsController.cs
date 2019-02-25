@@ -26,5 +26,16 @@ namespace Groove.Controllers
             return true;
         }
     
+        [Authorize]
+        [HttpGet("list")]
+        public JsonResult ListAccount()
+        {
+            return Json(new AccountsViewModel { Accounts = _accountsService.ListAccounts() });
+        }
+
+        public class AccountsViewModel
+        {
+            public IEnumerable<Account> Accounts { get; set; }
+        }
     }
 }
