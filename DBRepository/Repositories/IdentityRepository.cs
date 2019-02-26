@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using DBRepository.Interfaces;
-using CommonModels;
+using CommonModels.Entity;
 
 namespace DBRepository.Repositories
 {
@@ -21,7 +21,7 @@ namespace DBRepository.Repositories
 	    {
 	        using (var context = ContextFactory.CreateDbContext(ConnectionString))
 	        {
-	            context.Users.Add(new User()
+	            context.Users.Add(new User
 	            {
 	                Login = userName,
 	                Password = password,

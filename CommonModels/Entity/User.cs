@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CommonModels
+namespace CommonModels.Entity
 {
     public class User
     {

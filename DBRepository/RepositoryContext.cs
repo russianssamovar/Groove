@@ -1,4 +1,4 @@
-﻿using CommonModels;
+﻿using CommonModels.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DBRepository

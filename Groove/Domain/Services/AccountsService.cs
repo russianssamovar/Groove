@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommonModels;
+using CommonModels.Entity;
 using DBRepository.Interfaces;
 using Microsoft.AspNetCore.Http;
 

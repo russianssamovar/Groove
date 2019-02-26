@@ -9,7 +9,6 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { LinkContainer } from 'react-router-bootstrap';
-import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   menuItem: {
@@ -36,23 +35,23 @@ export class NavBar extends Component {
             <ListItemIcon>
               <SendIcon />
             </ListItemIcon>
-                <ListItemText inset primary="Main" />
+                <ListItemText inset primary="Accounts" />
           </MenuItem>
           </LinkContainer>
-          <LinkContainer to={'/dashboard/counter'}>
+          <LinkContainer to={'/dashboard/groups'}>
           <MenuItem>
             <ListItemIcon>
               <DraftsIcon />
             </ListItemIcon>
-                <ListItemText inset primary="Counter" />
+                <ListItemText inset primary="Groups" />
           </MenuItem>
           </LinkContainer>
-          <LinkContainer to={'/dashboard/fetchData'}>
+          <LinkContainer to={'/dashboard/reports'}>
           <MenuItem >
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-                <ListItemText inset primary="Fetch data" />
+                <ListItemText inset primary="Reports" />
           </MenuItem>
           </LinkContainer>
         </MenuList>

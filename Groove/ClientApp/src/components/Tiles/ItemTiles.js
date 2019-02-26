@@ -35,7 +35,7 @@ export class ItemTiles extends Component {
    console.log(this.state.accounts)
     return (
      
-    <Grid item xs={3} >
+    <Grid container item xs={12} spacing={16}>
          {this.state.accounts.map(account => (
             <AccountTile key={account.accessToken} account={account}/>
           ))

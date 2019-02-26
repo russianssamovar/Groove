@@ -1,6 +1,6 @@
 ﻿namespace CommonModels.Identity
 {
-    public class AccountAddToken
+    public class AccountAddTokenModel
     {
         public string Code { get; set; }
     }

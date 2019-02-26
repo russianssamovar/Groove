@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using CommonModels;
+using CommonModels.Entity;
 
 namespace DBRepository
 {
-	public static class DbInitializer
+    public static class DbInitializer
 	{
 		public static void Initialize(RepositoryContext context)
 		{

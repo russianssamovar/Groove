@@ -1,4 +1,4 @@
-﻿using CommonModels;
+﻿using CommonModels.Entity;
 using System.Collections.Generic;
 
 namespace Groove.Domain.Services

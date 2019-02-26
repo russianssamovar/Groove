@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CommonModels.Entity;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using CommonModels;
 
 namespace DBRepository.Interfaces
 {

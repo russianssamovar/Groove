@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using CommonModels;
+using CommonModels.Entity;
 using CommonModels.Identity;
 using CommonModels.OptionsModels;
 using DBRepository.Interfaces;
@@ -19,7 +19,7 @@ namespace Groove.Domain.Services
             _identityRepository = identityRepository ?? throw new ArgumentNullException(nameof(identityRepository));
         }
 
-        public AuthToken Registration(ReistrationModel reg)
+        public AuthTokenModel Registration(ReistrationModel reg)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace Groove.Domain.Services
             }
             catch (Exception e)
             {
-                return new AuthToken
+                return new AuthTokenModel
                        {
                            Access_token = "",
                            Message = e.Message
@@ -41,7 +41,7 @@ namespace Groove.Domain.Services
             }
         }
 
-        public AuthToken Autorize(string username, string password)
+        public AuthTokenModel Autorize(string username, string password)
         {
             var identity = GetIdentity(username, password);
             if (identity == null)
@@ -59,7 +59,7 @@ namespace Groove.Domain.Services
                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return new AuthToken
+            return new AuthTokenModel
                    {
                        Access_token = encodedJwt,
                        UserName = identity.Name
