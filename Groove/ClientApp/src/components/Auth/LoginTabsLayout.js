@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import RegistrationForm from './RegistrationForm'
 import LoginForm from './LoginForm'
 import Grid from '@material-ui/core/Grid';
-import Cookies from 'js-cookie';
 
 function TabContainer(props) {
   return (
@@ -22,47 +21,28 @@ TabContainer.propTypes = {
 };
 
 export class LoginTabsLayout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  state = {
-    value: 0,
-  };
-
   handleChange = (event, value) => {
-    this.setState({ value });
+    this.props.setTab(value);
   };
-
   render() {
-    var token = Cookies.get('token');
-    if(token != null)
-    {
-     window.location.replace("/dashboard");
-    }
-
-    const { value } = this.state;
-
+    const { authTab, auth, setAuth } = this.props
     return (
-      <Grid container justify = "center" alignItems = "center" style={{ minHeight: '100vh' }} item xs={12}>
-      <div>
-        <AppBar position="static" color="primary">
-          <Tabs value={value} onChange={this.handleChange} centered>
-            <Tab label="Login" />
-            <Tab label="Registration" />
-          </Tabs>
+      <Grid container justify="center" alignItems="center" style={{ minHeight: '100vh' }} item xs={12}>
+        <div>
+          <AppBar position="static" color="primary">
+            <Tabs value={authTab.value} onChange={this.handleChange} centered>
+              <Tab label="Login" />
+              <Tab label="Registration" />
+            </Tabs>
           </AppBar>
-        <Grid container spacing={24}>
-          {value === 0 && <Grid item xs={12}><TabContainer><LoginForm/></TabContainer></Grid>}
-          {value === 1 && <Grid item xs={12}><TabContainer><RegistrationForm /></TabContainer></Grid>}
-        </Grid>
+          <Grid container spacing={24}>
+            {authTab.value === 0 && <Grid item xs={12}><TabContainer><LoginForm auth={auth} setAuth={setAuth}/></TabContainer></Grid>}
+            {authTab.value === 1 && <Grid item xs={12}><TabContainer><RegistrationForm auth={auth} setAuth={setAuth}/></TabContainer></Grid>}
+          </Grid>
         </div>
       </Grid>
     );
   }
 }
-
-LoginTabsLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default LoginTabsLayout;

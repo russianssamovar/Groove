@@ -25,8 +25,8 @@ export class RegistrationForm extends Component {
     {
       if(response.data.access_token != "")
       {
+        this.props.setAuth({access_token: response.data.access_token, username: response.data.userName});
         Cookies.set('token', response.data.access_token);
-        window.location.replace("/dashboard");
       }
       else
       {
@@ -74,7 +74,7 @@ render() {
                />
              <br/>
              <TextField
-               type="Confirm Password"
+               type="Password"
                hintText="Password"
                name="confirmPassword"
                floatingLabelText="Confirm Password"
@@ -85,7 +85,7 @@ render() {
              <br/>
              <RaisedButton type="submit" label="Submit" primary={true}/>
          </Grid>
-         <FormLabel className={this.state.isHidden ? 'hidden' : 'nonHidden'} error="true">
+         <FormLabel className={this.state.isHidden ? 'hidden' : 'nonHidden'} error={true}>
                 {this.state.message}
             </FormLabel>
          </form>

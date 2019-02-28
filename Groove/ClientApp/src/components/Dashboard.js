@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { NavBar } from './NavBar';
-import {DashBoardLayout} from './DashBoardLayout';
-import {ItemTiles} from './Tiles/ItemTiles';
+import { DashBoardLayout } from './DashBoardLayout';
+import { ItemTiles } from './Tiles/ItemTiles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -11,22 +11,17 @@ import Cookies from 'js-cookie';
 
 export class Dashboard extends Component {
   displayName = Dashboard.name
-  constructor(props) {
-    super(props);
-    this.state = { forecasts: [], loading: true };
-  }
 
   render() {
 
     var token = Cookies.get('token');
-    if(token == null)
-    {
-     window.location.replace("/");
+    if (token == null) {
+      window.location.replace("/");
     }
 
     return (
       <Grid container spacing={24}>
-      <Grid item xs={12}>
+        <Grid item xs={12}>
           <AppBar color="primary" position="static">
             <Toolbar>
               <Typography variant="h6" color="inherit">
@@ -35,14 +30,14 @@ export class Dashboard extends Component {
             </Toolbar>
           </AppBar>
         </Grid>
-          <Grid item xs={3}>
-            <NavBar/>
-          </Grid>
-          <Grid item xs={9}>
-            <DashBoardLayout>
-                      <Route exact path='/dashboard/' component={ItemTiles} />
-            </DashBoardLayout>
-            </Grid>
+        <Grid item xs={3}>
+          <NavBar />
+        </Grid>
+        <Grid item xs={9}>
+          <DashBoardLayout>
+            <Route exact path='/dashboard/' component={ItemTiles} />
+          </DashBoardLayout>
+        </Grid>
       </Grid>
     );
   }
