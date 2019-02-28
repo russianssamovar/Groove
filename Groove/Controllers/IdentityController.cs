@@ -27,5 +27,17 @@ namespace Groove.Controllers
             return Json(_identityService.Registration(reg));
         }
 
+        [HttpGet("isValid")]
+        public JsonResult IsValid(string token)
+        {
+            try
+            {
+                return Json(_identityService.ValidateToken(token));
+            }
+            catch 
+            {
+                return Json(false);
+            }
+        }
     }
 }

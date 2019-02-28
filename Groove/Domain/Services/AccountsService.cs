@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using CommonModels.Entity;
 using DBRepository.Interfaces;
 using Microsoft.AspNetCore.Http;
+using VkNet;
+using VkNet.Model;
+using VkNet.Model.RequestParams;
 
 namespace Groove.Domain.Services
 {
@@ -32,6 +35,15 @@ namespace Groove.Domain.Services
                 return;
             }
 
+            var api = new VkApi();
+    
+            api.Authorize(new ApiAuthParams
+                          {
+                              AccessToken = "access_token"
+                          });
+            var res = api.Groups.Get(new GroupsGetParams());
+
+
             _accountRepository.Add(new Account
             {
                 AccessToken = token,
@@ -39,4 +51,30 @@ namespace Groove.Domain.Services
             });
         }
     }
+
+    //public interface IAccountBuilder
+    //{
+    //    Account Account  { get; set; }
+    //    IAccountBuilder WithMainInformation();
+    //    IAccountBuilder WithGroups();
+    //    Account GetResult();
+
+    //}
+
+    //public class VkAccountBuilder : IAccountBuilder
+    //{
+    //    private readonly Account _account;
+
+    //    public Account Account => _account;
+
+    //    public IAccountBuilder WithMainInformation()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public IAccountBuilder WithGroups()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

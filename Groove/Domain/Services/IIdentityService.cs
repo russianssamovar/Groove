@@ -9,6 +9,6 @@ namespace Groove.Domain.Services
         AuthTokenModel Registration(ReistrationModel reg);
         User GetUser(string userName);
         User GetUserById(long userId);
-
+        AuthTokenModel ValidateToken(string token);
     }
 }

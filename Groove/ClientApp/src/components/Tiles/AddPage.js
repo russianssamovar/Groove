@@ -2,40 +2,26 @@ import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-export class AddPage extends Component {
+export default class AddPage extends Component {
   displayName = AddPage.name
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-
-    var token = Cookies.get('token');
-    if(token == null)
-    {
-     window.location.replace("/");
-    }
+    const { auth } = this.props
     var config = {
-        headers: {'Authorization': "bearer " + token}
+      headers: { 'Authorization': "bearer " + auth.token }
     };
-    
     var urlParams = new URLSearchParams(window.location.search);
-    axios.post('/api/accounts/add', 
-    {
-        code: urlParams.get('code')
-    },
-     config
-      ).then((response) =>
+    axios.post('/api/accounts/add',
       {
-        window.close();
-      })
+        code: urlParams.get('code')
+      },
+      config
+    ).then(() => {
+      window.close();
+    })
       .catch(error => {
-        if (error.response.status === 401 || error.response.status === 403) {
-          Cookies.remove('token');
-          window.location.replace("/");
-        }
-    });
+        console.log(error);
+      });
 
     return (
       <div>in progress...</div>

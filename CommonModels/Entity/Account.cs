@@ -9,5 +9,6 @@ namespace CommonModels.Entity
         public string Url { get; set; }
         public string AccessToken { get; set; }
         public List<Group> Groups { get; set; }
+        public AccountType Type { get; set; }
     }
 }

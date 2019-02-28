@@ -13,30 +13,26 @@ export class ItemTiles extends Component {
   }
   componentDidMount()
   {
-    var token = Cookies.get('token');
-    if(token == null)
-    {
-     window.location.replace("/");
-    }
-    axios.get('/api/accounts/list', { headers: { Authorization: "bearer " + token } }
-      ).then((response) =>
-      {
-        this.setState({accounts: response.data.accounts});
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response.status === 401 || error.response.status === 403) {
-          Cookies.remove('token');
-          window.location.replace("/");
-        }
-    });
+    //  axios.get('/api/accounts/list', { headers: { Authorization: "bearer " + this.props.auth.token } }
+    //   ).then((response) =>
+    //   {
+    //     this.setState({accounts: response.data.accounts});
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     if (error.response.status === 401 || error.response.status === 403) {
+    //       Cookies.remove('token');
+    //       window.location.replace("/");
+    //     }
+    // });
   }
+
   render() {
-   console.log(this.state.accounts)
+    const { accounts } = this.props
+    console.log(this.props.accounts) ;
     return (
-     
     <Grid container item xs={12} spacing={16}>
-         {this.state.accounts.map(account => (
+         {accounts.map(account => (
             <AccountTile key={account.accessToken} account={account}/>
           ))
          }  

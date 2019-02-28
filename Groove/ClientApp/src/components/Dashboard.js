@@ -7,18 +7,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Cookies from 'js-cookie';
 
 export class Dashboard extends Component {
   displayName = Dashboard.name
 
   render() {
-
-    var token = Cookies.get('token');
-    if (token == null) {
-      window.location.replace("/");
-    }
-
+    const { dashboard, auth } = this.props
+    console.log(dashboard);
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
@@ -35,7 +30,7 @@ export class Dashboard extends Component {
         </Grid>
         <Grid item xs={9}>
           <DashBoardLayout>
-            <Route exact path='/dashboard/' component={ItemTiles} />
+            <Route exact path='/' render={()=><ItemTiles  auth={auth} accounts={dashboard.accounts}/>} />
           </DashBoardLayout>
         </Grid>
       </Grid>

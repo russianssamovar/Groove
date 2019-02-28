@@ -5,18 +5,37 @@ import { connect } from 'react-redux'
 import { Grid } from '@material-ui/core';
 import { setAuth } from '../actions/AuthActions'
 import { setTab } from '../actions/AuthTabsActions'
-
+import AddPage from '../components/Tiles/AddPage'
+import axios from 'axios';
+import { Route } from 'react-router';
+import Cookies from 'js-cookie';
 
 export  class App extends Component {
   displayName = App.name
+  
+    render() {
+      const { auth, dashboard, authTab, setAuthAction, setTabAction} = this.props
+      axios.get('/api/identity/isValid?token=' + Cookies.get('token')
+      ).then((response) =>
+      {
+        if(response.data !== false)
+        {
+          setAuthAction({access_token: response.data.access_token, username: response.data.userName})
+        }
+        else
+        {
+          setAuthAction({access_token: "", username: ""})
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+    });
 
-  render() {
-    const { auth, dashboard, authTab, setAuthAction, setTabAction} = this.props
-    if(auth.isLogin)
+    if(!auth.isLogin)
     {
       return (
         <Grid container >
-          <Dashboard dashboard={dashboard}/>
+          <LoginTabsLayout authTab={authTab} auth={auth} setAuth={setAuthAction} setTab={setTabAction}/>
         </Grid>
     );
     }
@@ -24,7 +43,8 @@ export  class App extends Component {
     {
       return (
         <Grid container >
-          <LoginTabsLayout authTab={authTab} auth={auth} setAuth={setAuthAction} setTab={setTabAction}/>
+          <Route exact path="/accounts/add" render={() => (<AddPage auth={auth} />)} />
+          <Dashboard auth={auth} dashboard={dashboard}/>
         </Grid>
     );
     }

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using CommonModels.Entity;
 using CommonModels.Identity;
-using CommonModels.OptionsModels;
 using DBRepository.Interfaces;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
 
 namespace Groove.Domain.Services
 {
     public partial class IdentityService : IIdentityService
     {
         private readonly IIdentityRepository _identityRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityService(IIdentityRepository identityRepository)
+        public IdentityService(IIdentityRepository identityRepository, IHttpContextAccessor httpContextAccessor)
         {
             _identityRepository = identityRepository ?? throw new ArgumentNullException(nameof(identityRepository));
+            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
         public AuthTokenModel Registration(ReistrationModel reg)
@@ -49,15 +49,7 @@ namespace Groove.Domain.Services
                 return null;
             }
 
-            var now = DateTime.UtcNow;
-            var jwt = new JwtSecurityToken(
-                issuer: AuthOptions.ISSUER,
-                audience: AuthOptions.AUDIENCE,
-                notBefore: now,
-                claims: identity.Claims,
-                expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var encodedJwt = TokenHelper.GetToken(identity.Claims);
 
             return new AuthTokenModel
                    {
@@ -65,7 +57,27 @@ namespace Groove.Domain.Services
                        UserName = identity.Name
                    };
         }
-        
+
+        public User GetUser(string userName)
+        {
+            return _identityRepository.GetUser(userName);
+        }
+
+        public User GetUserById(long userId)
+        {
+            return _identityRepository.GetUserById(userId);
+        }
+
+        public AuthTokenModel ValidateToken(string token)
+        {
+            TokenHelper.ValidateToken(token);
+            return new AuthTokenModel
+                   {
+                       Access_token = token
+                   };
+          
+        }
+
         private ClaimsIdentity GetIdentity(string username, string password)
         {
             var user = GetUser(username);
@@ -86,16 +98,6 @@ namespace Groove.Domain.Services
                          };
 
             return new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType); 
-        }
-
-        public User GetUser(string userName)
-        {
-            return _identityRepository.GetUser(userName);
-        }
-
-        public User GetUserById(long userId)
-        {
-            return _identityRepository.GetUserById(userId);
         }
     }
 }
