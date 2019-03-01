@@ -4,8 +4,15 @@ namespace CommonModels.Entity
 {
     public class Account
     {
+        public Account()
+        {
+            Groups = new List<Group>();
+        }
+
         public long Id { get; set; }
-        public long OwnerId { get; set; }
+        public User Owner { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Url { get; set; }
         public string AccessToken { get; set; }
         public List<Group> Groups { get; set; }

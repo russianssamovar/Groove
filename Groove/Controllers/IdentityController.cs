@@ -1,6 +1,6 @@
 ﻿using System;
 using CommonModels.Identity;
-using Groove.Domain.Services;
+using Groove.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Groove.Controllers

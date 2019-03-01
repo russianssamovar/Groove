@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CommonModels.Entity;
 using CommonModels.Identity;
-using Groove.Domain.Services;
+using Groove.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +22,7 @@ namespace Groove.Controllers
         [HttpPost("add")]
         public bool AddAccount([FromBody]AccountAddTokenModel token)
         {
-            _accountsService.AddAccount(token.Code);
+            _accountsService.AddAccount(token.Code, AccountType.Vk);
             return true;
         }
     

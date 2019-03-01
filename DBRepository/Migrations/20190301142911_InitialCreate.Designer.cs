@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBRepository.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20190301083058_InitialCreate")]
+    [Migration("20190301142911_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,17 +29,19 @@ namespace DBRepository.Migrations
 
                     b.Property<string>("AccessToken");
 
-                    b.Property<long>("OwnerId");
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<long?>("OwnerId");
 
                     b.Property<byte>("Type");
 
                     b.Property<string>("Url");
 
-                    b.Property<long?>("UserId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Accounts");
                 });
@@ -82,14 +84,14 @@ namespace DBRepository.Migrations
 
             modelBuilder.Entity("CommonModels.Entity.Account", b =>
                 {
-                    b.HasOne("CommonModels.Entity.User")
+                    b.HasOne("CommonModels.Entity.User", "Owner")
                         .WithMany("Accounts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("CommonModels.Entity.Group", b =>
                 {
-                    b.HasOne("CommonModels.Entity.Account")
+                    b.HasOne("CommonModels.Entity.Account", "Account")
                         .WithMany("Groups")
                         .HasForeignKey("AccountId");
                 });

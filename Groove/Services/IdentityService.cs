@@ -5,8 +5,9 @@ using CommonModels.Entity;
 using CommonModels.Identity;
 using DBRepository.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Groove.Domain;
 
-namespace Groove.Domain.Services
+namespace Groove.Services
 {
     public partial class IdentityService : IIdentityService
     {

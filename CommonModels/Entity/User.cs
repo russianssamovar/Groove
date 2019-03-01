@@ -4,6 +4,10 @@ namespace CommonModels.Entity
 {
     public class User
     {
+        public User()
+        {
+            Accounts = new List<Account>();
+        }
         public long Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }

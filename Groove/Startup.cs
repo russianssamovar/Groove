@@ -2,7 +2,7 @@ using CommonModels.OptionsModels;
 using DBRepository.Factories;
 using DBRepository.Interfaces;
 using DBRepository.Repositories;
-using Groove.Domain.Services;
+using Groove.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

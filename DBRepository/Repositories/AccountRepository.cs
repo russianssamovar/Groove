@@ -17,7 +17,7 @@ namespace DBRepository.Repositories
         {
             using (var context = ContextFactory.CreateDbContext(ConnectionString))
             {
-                return context.Accounts.Where(u => u.OwnerId == userId).ToArray();
+                return context.Accounts.Where(u => u.Owner.Id == userId).ToArray();
             }
         }
 
@@ -29,12 +29,14 @@ namespace DBRepository.Repositories
             }
         }
 
-        public async Task<bool> Add(Account account)
+        public bool Add(long userId, Account account)
         {
             using (var context = ContextFactory.CreateDbContext(ConnectionString))
             {
-                await context.AddAsync(account);
-                await context.SaveChangesAsync();
+                var user = context.Users.FirstOrDefault(u => u.Id == userId);
+                account.Owner = user;
+                context.Accounts.Add(account);
+                context.SaveChanges();
                 return true;
             }
         }

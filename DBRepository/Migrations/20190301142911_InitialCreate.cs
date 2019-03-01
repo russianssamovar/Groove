@@ -28,18 +28,19 @@ namespace DBRepository.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    OwnerId = table.Column<long>(nullable: false),
+                    OwnerId = table.Column<long>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     Url = table.Column<string>(nullable: true),
                     AccessToken = table.Column<string>(nullable: true),
-                    Type = table.Column<byte>(nullable: false),
-                    UserId = table.Column<long>(nullable: true)
+                    Type = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accounts_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Accounts_Users_OwnerId",
+                        column: x => x.OwnerId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -66,9 +67,9 @@ namespace DBRepository.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_UserId",
+                name: "IX_Accounts_OwnerId",
                 table: "Accounts",
-                column: "UserId");
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_AccountId",

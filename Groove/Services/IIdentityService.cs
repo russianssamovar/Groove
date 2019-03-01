@@ -1,7 +1,7 @@
 ﻿using CommonModels.Entity;
 using CommonModels.Identity;
 
-namespace Groove.Domain.Services
+namespace Groove.Services
 {
     public interface IIdentityService
     {
