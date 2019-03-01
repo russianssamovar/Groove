@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBRepository.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20190225112831_InitialCreate")]
+    [Migration("20190301083058_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace DBRepository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CommonModels.Account", b =>
+            modelBuilder.Entity("CommonModels.Entity.Account", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,6 +30,8 @@ namespace DBRepository.Migrations
                     b.Property<string>("AccessToken");
 
                     b.Property<long>("OwnerId");
+
+                    b.Property<byte>("Type");
 
                     b.Property<string>("Url");
 
@@ -42,7 +44,7 @@ namespace DBRepository.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("CommonModels.Group", b =>
+            modelBuilder.Entity("CommonModels.Entity.Group", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +61,7 @@ namespace DBRepository.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("CommonModels.User", b =>
+            modelBuilder.Entity("CommonModels.Entity.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,16 +80,16 @@ namespace DBRepository.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CommonModels.Account", b =>
+            modelBuilder.Entity("CommonModels.Entity.Account", b =>
                 {
-                    b.HasOne("CommonModels.User")
+                    b.HasOne("CommonModels.Entity.User")
                         .WithMany("Accounts")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CommonModels.Group", b =>
+            modelBuilder.Entity("CommonModels.Entity.Group", b =>
                 {
-                    b.HasOne("CommonModels.Account")
+                    b.HasOne("CommonModels.Entity.Account")
                         .WithMany("Groups")
                         .HasForeignKey("AccountId");
                 });

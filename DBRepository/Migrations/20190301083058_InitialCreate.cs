@@ -31,6 +31,7 @@ namespace DBRepository.Migrations
                     OwnerId = table.Column<long>(nullable: false),
                     Url = table.Column<string>(nullable: true),
                     AccessToken = table.Column<string>(nullable: true),
+                    Type = table.Column<byte>(nullable: false),
                     UserId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>

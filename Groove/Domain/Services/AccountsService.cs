@@ -35,13 +35,13 @@ namespace Groove.Domain.Services
                 return;
             }
 
-            var api = new VkApi();
+            //var api = new VkApi();
     
-            api.Authorize(new ApiAuthParams
-                          {
-                              AccessToken = "access_token"
-                          });
-            var res = api.Groups.Get(new GroupsGetParams());
+            //api.Authorize(new ApiAuthParams
+            //              {
+            //                  AccessToken = "access_token"
+            //              });
+            //var res = api.Groups.Get(new GroupsGetParams());
 
 
             _accountRepository.Add(new Account

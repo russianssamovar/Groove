@@ -17,8 +17,7 @@ namespace DBRepository.Repositories
         {
             using (var context = ContextFactory.CreateDbContext(ConnectionString))
             {
-                return Enumerable.Empty<Account>();
-                //return context.Accounts.Where(u => u.OwnerId == userId).ToArray();
+                return context.Accounts.Where(u => u.OwnerId == userId).ToArray();
             }
         }
 

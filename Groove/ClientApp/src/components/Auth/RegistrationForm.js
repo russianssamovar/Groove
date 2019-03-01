@@ -25,11 +25,12 @@ export class RegistrationForm extends Component {
     {
       if(response.data.access_token != "")
       {
-        this.props.setAuth({access_token: response.data.access_token, username: response.data.userName});
+        this.props.setAuth({access_token: response.data.access_token, isLogin: true, username: response.data.userName});
         Cookies.set('token', response.data.access_token);
       }
       else
       {
+        this.props.setAuth({access_token: "", isLogin: false, username: ""});
         this.setState(
           {
             isHidden: false, 
