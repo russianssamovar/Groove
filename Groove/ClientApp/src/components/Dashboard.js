@@ -13,7 +13,6 @@ export class Dashboard extends Component {
 
   render() {
     const { dashboard, auth, setAccounts} = this.props
-    console.log(dashboard);
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>

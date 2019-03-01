@@ -1,3 +1,5 @@
+import { SET_AUTH } from '../actions/AuthActions'
+
 const initialState = {
     token: '',
     username: 'Unknow',
@@ -7,7 +9,7 @@ const initialState = {
   
   export function autentificationReducer(state = initialState, action) {
     switch (action.type) {
-      case 'SET_AUTH':
+      case SET_AUTH:
         return {...state, token: action.payload.access_token, isLogin: action.payload.isLogin, username: action.payload.username, isLoading: action.payload.isLoading}
       default:
         return state

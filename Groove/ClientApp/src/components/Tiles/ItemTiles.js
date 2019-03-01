@@ -24,8 +24,6 @@ export class ItemTiles extends Component {
 
   render() {
     const { dashboard } = this.props
-    console.log(dashboard.accounts);
-
     if (dashboard.isLoading) {
       return (
         <Grid container item xs={12} spacing={16}>

@@ -60,7 +60,6 @@ export class App extends Component {
 }
 
 const mapStateToProps = store => {
-  console.log(store)
   return {
     auth: store.auth,
     dashboard: store.dashboard,
