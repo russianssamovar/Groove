@@ -4,6 +4,7 @@ using CommonModels.Entity;
 using DBRepository.Interfaces;
 using Groove.Domain;
 using Microsoft.AspNetCore.Http;
+using VkNet.Model.RequestParams;
 
 namespace Groove.Services
 {
@@ -25,7 +26,7 @@ namespace Groove.Services
             return  _accountRepository.GetAccounts(Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name));
         }
 
-        public void AddAccount(string token, AccountType type)
+        public void AddAccount(Dictionary<string, string> addParams, AccountType type)
         {
             var user = _identityRepository.GetUserById(Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name));
             if (user == null)
@@ -36,18 +37,16 @@ namespace Groove.Services
             switch (type)
             {
                 case AccountType.Vk:
-                    _accountRepository.Add(user.Id, InitVkAccount(token));
+                    _accountRepository.Add(user.Id, InitVkAccount(addParams["#access_token"], addParams["user_id"]));
                     break;
                 default:
                     break;
             }
-
-           
         }
 
-        private Account InitVkAccount(string token)
+        private Account InitVkAccount(string token, string userId)
         {
-          return new VkAccountBuilder(token).WithMainInformation().GetResult();
+          return new VkAccountBuilder(token).WithMainInformation(Convert.ToInt64(userId)).GetResult();
         }
     }
 }

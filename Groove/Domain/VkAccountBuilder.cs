@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CommonModels.Entity;
 using VkNet;
+using VkNet.Enums.Filters;
+using VkNet.Exception;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
 using Group = CommonModels.Entity.Group;
@@ -32,11 +35,17 @@ namespace Groove.Domain
                        };
         }
 
-        public IAccountBuilder WithMainInformation()
+        public IAccountBuilder WithMainInformation(long userId)
         {
-            var info = _api.Account.GetProfileInfo();
+            var info = _api.Users.Get(new List<long>{userId}, ProfileFields.Photo100).FirstOrDefault();
+            if (info == null)
+            {
+                throw new InvalidUserIdException();
+            }
             _account.FirstName = info.FirstName;
             _account.LastName = info.LastName;
+            _account.AvatarUrl = info.Photo100.ToString();
+            _account.SocialUserId = userId.ToString();
             return this;
         }
 

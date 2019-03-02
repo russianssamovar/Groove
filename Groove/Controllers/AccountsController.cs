@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using CommonModels.Entity;
 using CommonModels.Identity;
+using CommonModels.Views;
 using Groove.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +20,9 @@ namespace Groove.Controllers
 
         [Authorize]
         [HttpPost("add")]
-        public bool AddAccount([FromBody]AccountAddTokenModel token)
+        public bool AddAccount([FromBody]VkAccountAddParametrs tokenParams)
         {
-            _accountsService.AddAccount(token.Code, AccountType.Vk);
+            _accountsService.AddAccount(tokenParams.ToDictionary(), AccountType.Vk);
             return true;
         }
     
@@ -31,11 +31,6 @@ namespace Groove.Controllers
         public JsonResult ListAccount()
         {
             return Json(new AccountsViewModel { Accounts = _accountsService.ListAccounts() });
-        }
-
-        public class AccountsViewModel
-        {
-            public IEnumerable<Account> Accounts { get; set; }
         }
     }
 }

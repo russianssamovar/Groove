@@ -12,7 +12,6 @@ import { Route } from 'react-router';
 import Cookies from 'js-cookie';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-
 export class App extends Component {
   displayName = App.name
 
@@ -24,7 +23,7 @@ export class App extends Component {
       }
       else {
         Cookies.remove('token');
-        this.props.setAuthAction({ access_token: "", isLogin: false, username: "", isLoading: false});
+        this.props.setAuthAction({ access_token: "", isLogin: false, username: "", isLoading: false });
       }
     })
       .catch((error) => {
@@ -44,16 +43,16 @@ export class App extends Component {
     if (!auth.isLoading) {
       return (
         <Grid container >
-          <Route exact path="/accounts/add" render={() => (<AddPage auth={auth} />)} />
+          <Route path="/accounts/add" render={() => (<AddPage auth={auth} />)} />
           <Dashboard auth={auth} dashboard={dashboard} setAccounts={setAccounts} />
         </Grid>
       );
     }
-    else{
+    else {
       return (
         <Grid container>
-        <LinearProgress style={{flexGrow: 1}} color="secondary" />
-     </Grid>
+          <LinearProgress style={{ flexGrow: 1 }} color="secondary" />
+        </Grid>
       );
     }
   }

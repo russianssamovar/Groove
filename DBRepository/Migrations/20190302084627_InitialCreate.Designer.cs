@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBRepository.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20190301142911_InitialCreate")]
+    [Migration("20190302084627_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,15 +29,17 @@ namespace DBRepository.Migrations
 
                     b.Property<string>("AccessToken");
 
+                    b.Property<string>("AvatarUrl");
+
                     b.Property<string>("FirstName");
 
                     b.Property<string>("LastName");
 
                     b.Property<long?>("OwnerId");
 
-                    b.Property<byte>("Type");
+                    b.Property<string>("SocialUserId");
 
-                    b.Property<string>("Url");
+                    b.Property<byte>("Type");
 
                     b.HasKey("Id");
 

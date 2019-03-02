@@ -5,7 +5,7 @@ namespace Groove.Domain
 {
     public interface IAccountBuilder
     {
-        IAccountBuilder WithMainInformation();
+        IAccountBuilder WithMainInformation(long userId);
         IAccountBuilder WithGroups(GroupsGetParams getParams);
         Account GetResult();
     }

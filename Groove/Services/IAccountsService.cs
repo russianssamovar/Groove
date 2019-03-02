@@ -6,6 +6,6 @@ namespace Groove.Services
     public interface IAccountsService
     {
         IEnumerable<Account> ListAccounts();
-        void AddAccount(string token, AccountType type);
+        void AddAccount(Dictionary<string, string> addParams, AccountType type);
     }
 }

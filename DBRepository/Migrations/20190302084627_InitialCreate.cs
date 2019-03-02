@@ -29,9 +29,10 @@ namespace DBRepository.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OwnerId = table.Column<long>(nullable: true),
+                    SocialUserId = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Url = table.Column<string>(nullable: true),
+                    AvatarUrl = table.Column<string>(nullable: true),
                     AccessToken = table.Column<string>(nullable: true),
                     Type = table.Column<byte>(nullable: false)
                 },

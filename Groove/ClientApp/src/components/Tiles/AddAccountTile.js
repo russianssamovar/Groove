@@ -49,9 +49,9 @@ export class AddAccountTile extends Component {
               width: 200,
             },
           }}>
-            <MenuItem onClick={() => this.oauthHandle("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + window.location.host + "/accounts/add&scope=offline&response_type=code&v=5.92")}>Vk</MenuItem>
-            <MenuItem onClick={() => this.oauthHandle("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + window.location.host + "/accounts/add&scope=offline&response_type=code&v=5.92")}>Instagram</MenuItem>
-            <MenuItem onClick={() => this.oauthHandle("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + window.location.host + "/accounts/add&scope=offline&response_type=code&v=5.92")}>Test2</MenuItem>
+            <MenuItem onClick={() => this.oauthHandle("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + window.location.host + "/accounts/add&groups,stats,offline&response_type=token&v=5.92")}>Vk</MenuItem>
+            <MenuItem onClick={() => this.oauthHandle("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + window.location.host + "/accounts/add&scope=offline&response_type=token&v=5.92")}>Instagram</MenuItem>
+            <MenuItem onClick={() => this.oauthHandle("https://oauth.vk.com/authorize?client_id=6854870&display=page&redirect_uri=" + window.location.host + "/accounts/add&scope=offline&response_type=token&v=5.92")}>Test2</MenuItem>
         </Menu>
       </Paper>
       </Grid>
