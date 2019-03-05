@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CommonModels.Entity;
 using DBRepository.Interfaces;
-using Groove.Domain;
+using Groove.Vk.Domain;
 using Microsoft.AspNetCore.Http;
 using VkNet.Model.RequestParams;
 
@@ -46,7 +46,7 @@ namespace Groove.Services
 
         private Account InitVkAccount(string token, string userId)
         {
-          return new VkAccountBuilder(token).WithMainInformation(Convert.ToInt64(userId)).GetResult();
+          return new VkAccountBuilder(token).WithMainInformation(Convert.ToInt64(userId)).WithGroups(new GroupsGetParams()).GetResult();
         }
     }
 }

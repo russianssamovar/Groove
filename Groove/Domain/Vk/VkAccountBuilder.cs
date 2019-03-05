@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommonModels.Entity;
+using Groove.Domain;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Exception;
@@ -9,7 +10,7 @@ using VkNet.Model;
 using VkNet.Model.RequestParams;
 using Group = CommonModels.Entity.Group;
 
-namespace Groove.Domain
+namespace Groove.Vk.Domain
 {
     public class VkAccountBuilder : IAccountBuilder
     {

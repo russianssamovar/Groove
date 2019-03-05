@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonModels.Entity;
@@ -34,6 +35,20 @@ namespace DBRepository.Repositories
             using (var context = ContextFactory.CreateDbContext(ConnectionString))
             {
                 var user = context.Users.FirstOrDefault(u => u.Id == userId);
+
+                var existAccount = context.Accounts.FirstOrDefault(a => a.SocialUserId == account.SocialUserId);
+                if (existAccount != null && existAccount.Owner.Id != user.Id)
+                {
+                   throw new UnauthorizedAccessException("You don't own this account");
+                }
+
+                if (existAccount != null && existAccount.Owner.Id == user.Id)
+                {
+                    existAccount.AccessToken = account.AccessToken;
+                    existAccount.AvatarUrl = account.AvatarUrl;
+                    existAccount.FirstName = account.FirstName;
+
+                }
                 account.Owner = user;
                 context.Accounts.Add(account);
                 context.SaveChanges();
