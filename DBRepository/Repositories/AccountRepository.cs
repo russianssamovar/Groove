@@ -21,6 +21,14 @@ namespace DBRepository.Repositories
             }
         }
 
+        public Account GetAccount(long accountId)
+        {
+            using (var context = ContextFactory.CreateDbContext(ConnectionString))
+            {
+                return context.Accounts.FirstOrDefault(a => a.Id == accountId);
+            }
+        }
+
         public IEnumerable<Account> UpdateAccounts(long userId, IEnumerable<Account> accounts)
         {
             using (var context = ContextFactory.CreateDbContext(ConnectionString))

@@ -4,7 +4,6 @@ using CommonModels.Entity;
 using DBRepository.Interfaces;
 using Groove.Domain.Context;
 using Groove.Vk.Domain;
-using Microsoft.AspNetCore.Http;
 using VkNet.Model.RequestParams;
 
 namespace Groove.Services
@@ -13,18 +12,21 @@ namespace Groove.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IIdentityRepository _identityRepository;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccountsService(IAccountRepository accountRepository, IIdentityRepository identityRepository, IHttpContextAccessor httpContextAccessor)
+        public AccountsService(IAccountRepository accountRepository, IIdentityRepository identityRepository)
         {
             _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
             _identityRepository = identityRepository ?? throw new ArgumentNullException(nameof(identityRepository));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+        }
+
+        public Account GetAccount(long accountId)
+        {
+           return _accountRepository.GetAccount(accountId);
         }
 
         public IEnumerable<Account> ListAccounts()
         {
-            var userId = Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name);
+            var userId = GrooveAppContext.Id;
             var accounts = _accountRepository.GetAccounts(userId);
             return _accountRepository.UpdateAccounts(userId, UpdateAccountsInfo(accounts));
         }

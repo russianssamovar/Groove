@@ -52,6 +52,7 @@ namespace Groove
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IAccountsService, AccountsService>();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
         }
