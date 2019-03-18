@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CommonModels.Entity;
 using DBRepository.Interfaces;
+using Groove.Domain.Context;
 using Groove.Vk.Domain;
 using Microsoft.AspNetCore.Http;
 using VkNet.Model.RequestParams;
@@ -23,12 +24,14 @@ namespace Groove.Services
 
         public IEnumerable<Account> ListAccounts()
         {
-            return  _accountRepository.GetAccounts(Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name));
+            var userId = Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name);
+            var accounts = _accountRepository.GetAccounts(userId);
+            return _accountRepository.UpdateAccounts(userId, UpdateAccountsInfo(accounts));
         }
 
         public void AddAccount(Dictionary<string, string> addParams, AccountType type)
         {
-            var user = _identityRepository.GetUserById(Convert.ToInt64(_httpContextAccessor.HttpContext.User.Identity.Name));
+            var user = _identityRepository.GetUserById(GrooveAppContext.Id);
             if (user == null)
             {
                 return;
@@ -39,14 +42,24 @@ namespace Groove.Services
                 case AccountType.Vk:
                     _accountRepository.Add(user.Id, InitVkAccount(addParams["#access_token"], addParams["user_id"]));
                     break;
-                default:
-                    break;
+            }
+        }
+        private IEnumerable<Account> UpdateAccountsInfo(IEnumerable<Account> accounts)
+        {
+            foreach (var acc in accounts)
+            {
+                switch (acc.Type)
+                {
+                    case AccountType.Vk:
+                       yield return InitVkAccount(acc.AccessToken, acc.SocialUserId);
+                        break;
+                }
             }
         }
 
-        private Account InitVkAccount(string token, string userId)
+        private Account InitVkAccount(string token, string socialUserId)
         {
-          return new VkAccountBuilder(token).WithMainInformation(Convert.ToInt64(userId)).WithGroups(new GroupsGetParams()).GetResult();
+          return new VkAccountBuilder(token).WithMainInformation(Convert.ToInt64(socialUserId)).WithGroups(new GroupsGetParams()).GetResult();
         }
     }
 }

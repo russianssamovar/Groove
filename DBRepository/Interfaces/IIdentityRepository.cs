@@ -7,5 +7,6 @@ namespace DBRepository.Interfaces
         User GetUser(string userName);
         bool Registration(string userName, string password);
         User GetUserById(long userId);
+        User GetUserByToken(string token);
     }
 }

@@ -20,12 +20,12 @@ export class LoginForm extends Component {
       login: event.target.login.value,
       password: event.target.password.value
     }).then((response) => {
-      if (response.data !== null) {
-        this.props.setAuth({access_token: response.data.access_token, isLogin: true, username: response.data.userName});
-        Cookies.set('token', response.data.access_token);
+      if (response.data !== null && response.data.accessToken !== "") {
+        this.props.setAuth({access_token: response.data.accessToken, isLogin: true, username: response.data.userName, userId: response.data.userId, message: response.data.message, isLoading: false});
+        Cookies.set('token', response.data.accessToken);
       }
       else {
-        this.props.setAuth({access_token: "", isLogin: false, username: ""});
+        this.props.setAuth({access_token: response.data.accessToken, isLogin: false, username: response.data.userName, userId: response.data.userId, message: response.data.message, isLoading: false});
         this.setState({ isHidden: false });
       }
     })
@@ -66,7 +66,7 @@ export class LoginForm extends Component {
               >
                 <RaisedButton type="submit" label="Submit" primary={true} />
               </Grid>
-              <FormLabel className={this.state.isHidden ? 'hidden' : 'nonHidden'} error={true}> Error login or password</FormLabel>
+              <FormLabel className={this.state.isHidden ? 'hidden' : 'nonHidden'} error={true}> {this.props.message}</FormLabel>
             </div>
           </form>
         </MuiThemeProvider>

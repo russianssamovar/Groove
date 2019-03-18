@@ -7,5 +7,7 @@ namespace DBRepository.Interfaces
     {
         IEnumerable<Account> GetAccounts(long userId);
         bool Add(long userId, Account account);
+        Account GetAccount(long userId, string socialId, AccountType type);
+        IEnumerable<Account> UpdateAccounts(long userId, IEnumerable<Account> accounts);
     }
 }

@@ -18,12 +18,12 @@ export class App extends Component {
   componentDidMount() {
     axios.get('/api/identity/isValid?token=' + Cookies.get('token')
     ).then((response) => {
-      if (response.data !== false) {
-        this.props.setAuthAction({ access_token: response.data.access_token, isLogin: true, username: response.data.userName, isLoading: false });
+      if (response.data.accessToken !== "") {
+        this.props.setAuth({access_token: response.data.accessToken, isLogin: true, username: response.data.userName, userId: response.data.userId, message: response.data.message, isLoading: false});
       }
       else {
         Cookies.remove('token');
-        this.props.setAuthAction({ access_token: "", isLogin: false, username: "", isLoading: false });
+        this.props.setAuth({access_token: response.data.accessToken, isLogin: false, username: response.data.userName, userId: response.data.userId, message: response.data.message, isLoading: false});
       }
     })
       .catch((error) => {

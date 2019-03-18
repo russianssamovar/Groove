@@ -1,5 +1,6 @@
 ﻿using System;
 using CommonModels.Identity;
+using Groove.Domain.Context;
 using Groove.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,26 +19,25 @@ namespace Groove.Controllers
         [HttpPost("token")]
         public JsonResult Token([FromBody]AutorizationModel auth)
         {
-            return Json(_identityService.Autorize(auth.Login, auth.Password));
+            var authModel = _identityService.Autorize(auth.Login, auth.Password);
+            GrooveAppContext.Id = authModel.UserId;
+            return Json(authModel);
         }
 
         [HttpPost("registration")]
         public JsonResult Registration([FromBody]ReistrationModel reg)
         {
-            return Json(_identityService.Registration(reg));
+            var authModel = _identityService.Registration(reg);
+            GrooveAppContext.Id = authModel.UserId;
+            return Json(authModel);
         }
 
         [HttpGet("isValid")]
         public JsonResult IsValid(string token)
         {
-            try
-            {
-                return Json(_identityService.ValidateToken(token));
-            }
-            catch 
-            {
-                return Json(false);
-            }
+            var authModel = _identityService.ValidateToken(token);
+            GrooveAppContext.Id = authModel.UserId;
+            return Json(authModel);
         }
     }
 }

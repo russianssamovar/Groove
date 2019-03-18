@@ -38,5 +38,12 @@ namespace DBRepository.Repositories
 	            return context.Users.FirstOrDefault(u => u.Id == userId);
 	        }
         }
+	    public User GetUserByToken(string token)
+	    {
+	        using (var context = ContextFactory.CreateDbContext(ConnectionString))
+	        {
+	            return context.Users.FirstOrDefault(u => u.Token == token);
+	        }
+	    }
 	}
 }
