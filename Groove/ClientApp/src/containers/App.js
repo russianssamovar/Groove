@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Grid } from '@material-ui/core';
 import { setAuth } from '../actions/AuthActions'
 import { setTab } from '../actions/AuthTabsActions'
-import { setAccounts } from '../actions/DashboardActions'
+import { setAccounts, setGroups } from '../actions/DashboardActions'
 import AddPage from '../components/Tiles/AddPage'
 import axios from 'axios';
 import { Route } from 'react-router';
@@ -31,7 +31,7 @@ export class App extends Component {
       });
   }
   render() {
-    const { auth, dashboard, authTab, setAuthAction, setTabAction, setAccounts } = this.props
+    const { auth, dashboard, authTab, setAuthAction, setTabAction, setAccounts, setGroups } = this.props
 
     if (!auth.isLogin && !auth.isLoading) {
       return (
@@ -44,7 +44,7 @@ export class App extends Component {
       return (
         <Grid container >
           <Route path="/accounts/add" render={() => (<AddPage auth={auth} />)} />
-          <Dashboard auth={auth} dashboard={dashboard} setAccounts={setAccounts} />
+          <Dashboard auth={auth} dashboard={dashboard} setAccounts={setAccounts} setGroups={setGroups}/>
         </Grid>
       );
     }
@@ -70,6 +70,7 @@ const mapDispatchToProps = dispatch => ({
   setAuthAction: auth => dispatch(setAuth(auth)),
   setTabAction: value => dispatch(setTab(value)),
   setAccounts: accounts => dispatch(setAccounts(accounts)),
+  setGroups: groups => dispatch(setGroups(groups)),
 })
 
 export default connect(

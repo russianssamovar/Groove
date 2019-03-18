@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { AddAccountTile } from './AddAccountTile';
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import AccountTile from './AccountTile';
+import GroupTile from './GropTile';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 
@@ -10,16 +10,15 @@ export class ItemTiles extends Component {
   displayName = ItemTiles.name
 
   componentDidMount() {
-    var config = {
-      headers: { 'Authorization': "bearer " + this.props.auth.token }
-    };
-    axios.get('/api/accounts/list', config)
-      .then((response) => {
-        this.props.setAccounts({ accounts: response.data.accounts, isLoading: false });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    switch (window.location.pathname) {
+      case "/groups":
+        var url = new URL(window.location);
+        var accId = url.searchParams.get("accountId");
+        this.props.setGroups({token: this.props.auth.token, accId: accId});
+        break;
+      default:
+        this.props.setAccounts({token: this.props.auth.token});
+    }
   }
 
   render() {
@@ -37,16 +36,27 @@ export class ItemTiles extends Component {
       );
     }
     else {
-      return (
-        <Grid container item xs={12} spacing={16}>
-          {dashboard.accounts.map(account => (
-            <AccountTile key={account.accessToken} account={account} />
-          ))
-          }
-          <AddAccountTile />
-        </Grid>
-      );
+      switch (window.location.pathname) {
+        case "/groups":
+          return (
+            <Grid container item xs={12} spacing={16}>
+              {dashboard.groups.map(group => (
+                <GroupTile key={account.accessToken} group={group} />
+              ))
+              }
+            </Grid>
+          );
+        default:
+          return (
+            <Grid container item xs={12} spacing={16}>
+              {dashboard.accounts.map(account => (
+                <AccountTile key={account.accessToken} account={account} setGroups={this.props.setGroups} />
+              ))
+              }
+              <AddAccountTile />
+            </Grid>
+          );
+      }
     }
   }
 }
-

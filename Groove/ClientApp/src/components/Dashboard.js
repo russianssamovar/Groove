@@ -12,7 +12,7 @@ export class Dashboard extends Component {
   displayName = Dashboard.name
 
   render() {
-    const { dashboard, auth, setAccounts} = this.props
+    const { dashboard, auth, setAccounts, setGroups} = this.props
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
@@ -29,7 +29,8 @@ export class Dashboard extends Component {
         </Grid>
         <Grid item xs={9}>
           <DashBoardLayout>
-            <Route exact path='/' render={()=><ItemTiles  auth={auth} dashboard={dashboard} setAccounts={setAccounts}/>} />
+            <Route exact path='/' render={()=><ItemTiles auth={auth} dashboard={dashboard} setAccounts={setAccounts}/>} />
+            <Route path='/groups' render={()=><ItemTiles auth={auth} dashboard={dashboard} setGroups={setGroups}/>} />
           </DashBoardLayout>
         </Grid>
       </Grid>
